@@ -1,4 +1,4 @@
-export default interface IClientOptions {
+export interface IClientOptions {
 	host?: string;
 	port?: number|string;
 	secure?: boolean;

@@ -1,17 +1,15 @@
 {
 	"compilerOptions": {
-		"outDir": "./dist/",
+		"outDir": "./dist",
 		"noImplicitAny": true,
-		"module": "amd",
+		"module": "commonjs",
 		"target": "esnext",
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
 		"declaration": true,
 		"moduleResolution": "node"
 	},
-	"exclude": [
-		"node_modules",
-		".vscode",
-		"./dist/*.*"
+	"files": [
+		"./src/index.ts"
 	]
 }
