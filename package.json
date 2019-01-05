@@ -1,6 +1,6 @@
 {
   "name": "@pinkkis/socketclient",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "small websocket client for browser, for use in phaser games",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
