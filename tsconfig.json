@@ -1,19 +1,17 @@
 {
 	"compilerOptions": {
 		"outDir": "./dist/",
-		"outFile": "./dist/client.d.ts",
 		"noImplicitAny": true,
 		"module": "amd",
 		"target": "esnext",
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"emitDeclarationOnly": true,
 		"declaration": true,
 		"moduleResolution": "node"
 	},
 	"exclude": [
 		"node_modules",
 		".vscode",
-		"./dist/client.d.ts"
+		"./dist/*.*"
 	]
 }

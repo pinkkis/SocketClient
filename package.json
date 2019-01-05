@@ -2,10 +2,10 @@
   "name": "@pinkkis/socketclient",
   "version": "0.2.0",
   "description": "small websocket client for browser, for use in phaser games",
-  "main": "./dist/client.min.js",
-  "types": "./dist/client.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "webpack --mode production && tsc"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -22,15 +22,6 @@
     "eventemitter3": "^3.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/plugin-proposal-class-properties": "^7.2.3",
-    "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
-    "@babel/preset-env": "^7.2.3",
-    "@babel/preset-typescript": "^7.1.0",
-    "babel-loader": "^8.0.5",
-    "terser-webpack-plugin": "^1.2.1",
-    "typescript": "^3.2.2",
-    "webpack": "^4.28.3",
-    "webpack-cli": "^3.2.0"
+    "typescript": "^3.2.2"
   }
 }
