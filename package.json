@@ -1,0 +1,33 @@
+{
+  "name": "socketclient",
+  "version": "0.1.0",
+  "description": "SocketClient",
+  "main": "./lib/index.ts",
+  "scripts": {
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pinkkis/SocketClient.git"
+  },
+  "keywords": [],
+  "author": "Kristian Koivisto-Kokko <pinkkis@gmail.com> (http://pinkkis.com/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pinkkis/SocketClient/issues"
+  },
+  "homepage": "https://github.com/pinkkis/SocketClient#readme",
+  "dependencies": {
+    "eventemitter3": "^3.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.2.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/preset-typescript": "^7.1.0",
+    "terser-webpack-plugin": "^1.2.1",
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.2.0"
+  }
+}
