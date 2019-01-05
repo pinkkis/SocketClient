@@ -1,7 +1,7 @@
 {
-  "name": "socketclient",
+  "name": "@pinkkis/socketclient",
   "version": "0.1.0",
-  "description": "SocketClient",
+  "description": "small websocket client for browser, for use in phaser games",
   "main": "./dist/client.min.js",
   "types": "./dist/client.d.ts",
   "scripts": {
