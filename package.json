@@ -2,16 +2,17 @@
   "name": "socketclient",
   "version": "0.1.0",
   "description": "SocketClient",
-  "main": "./lib/index.ts",
+  "main": "./dist/client.min.js",
+  "types": "./dist/client.d.ts",
   "scripts": {
-    "build": "webpack --mode production"
+    "build": "webpack --mode production && tsc"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pinkkis/SocketClient.git"
   },
   "keywords": [],
-  "author": "Kristian Koivisto-Kokko <pinkkis@gmail.com> (http://pinkkis.com/)",
+  "author": "Kristian Koivisto-Kokko <pinkkis@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/pinkkis/SocketClient/issues"
@@ -26,7 +27,9 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-typescript": "^7.1.0",
+    "babel-loader": "^8.0.5",
     "terser-webpack-plugin": "^1.2.1",
+    "typescript": "^3.2.2",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.2.0"
   }
