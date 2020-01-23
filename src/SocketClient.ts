@@ -111,9 +111,9 @@ export class SocketClient extends EventEmitter {
 	}
 
 	// main message handler
-	public messageHandler(event: MessageEvent, json: any) {
-		this.emit('message', json);
-		this.emit('stringMessage', json);
+	public messageHandler(event: MessageEvent, payload: any) {
+		this.emit('message', payload);
+		this.emit('stringMessage', payload);
 	}
 
 	public binaryMessageHandler(event: MessageEvent) {
@@ -172,15 +172,15 @@ export class SocketClient extends EventEmitter {
 		console.error('SocketClient error', event);
 	}
 
-	private onClientId(event: MessageEvent, json: any) {
-		this.clientId = json.message.id;
+	private onClientId(event: MessageEvent, payload: any) {
+		this.clientId = payload.msg;
 		this.emit('clientId', this.clientId);
 		console.log('SocketClient - clientId', this.clientId);
 	}
 
-	private onPing(event: MessageEvent, json: any): void {
-		this.emit('ping', json.message);
-		this.send({ type: 'pong', message: json.message });
+	private onPing(event: MessageEvent, payload: any): void {
+		this.emit('ping', payload.msg);
+		this.send({ type: 'pong', msg: payload.msg });
 		if (this.options.debug) {
 			console.log('SocketClient - ping');
 		}
