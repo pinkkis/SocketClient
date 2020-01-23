@@ -1,7 +1,7 @@
-import { EventEmitter } from "eventemitter3";
-import { IClientOptions } from "./IClientOptions";
-import { createSocketAddress } from "./helpers";
-import { CLOSE_GOING_AWAY, CLOSE_NORMAL } from "./CloseCodes";
+import { EventEmitter } from 'eventemitter3';
+import { IClientOptions } from './IClientOptions';
+import { createSocketAddress } from './helpers';
+import { CLOSE_GOING_AWAY, CLOSE_NORMAL } from './CloseCodes';
 
 export const defaultOptions = {
 	autoconnect: true,
@@ -57,32 +57,30 @@ export class SocketClient extends EventEmitter {
 			this.binaryType = this.socket.binaryType;
 
 			// add socket event listeners
-			this.socket.addEventListener(
-				"message",
-				(event: MessageEvent): void => {
+			this.socket.addEventListener('message', (event: MessageEvent): void => {
 					this.onSocketMessage(event);
-				}
+				},
 			);
 
-			this.socket.addEventListener("error", (event: Event): void => {
+			this.socket.addEventListener('error', (event: Event): void => {
 				this.onError(event);
 			});
 
-			this.socket.addEventListener("open", (event: Event): void => {
+			this.socket.addEventListener('open', (event: Event): void => {
 				this.onConnect(event);
 			});
 
-			this.socket.addEventListener("close", (event: Event): void => {
+			this.socket.addEventListener('close', (event: Event): void => {
 				this.onDisconnect(event);
 			});
 		} else {
-			console.warn("SocketClient already connected");
+			console.warn('SocketClient already connected');
 		}
 
 		if (!this.beforeunloadEventSet) {
-			window.addEventListener("beforeunload", (): void => {
+			window.addEventListener('beforeunload', (): void => {
 				if (this.socket && this.socket.readyState === WebSocket.OPEN) {
-					this.socket.close(CLOSE_GOING_AWAY, "client terminated");
+					this.socket.close(CLOSE_GOING_AWAY, 'client terminated');
 					this.clientId = null;
 				}
 			});
@@ -96,7 +94,7 @@ export class SocketClient extends EventEmitter {
 			this.options.reconnect = false;
 		}
 
-		this.socket.close(CLOSE_NORMAL, "client disconnecting");
+		this.socket.close(CLOSE_NORMAL, 'client disconnecting');
 	}
 
 	public send(payload: any): void {
@@ -109,7 +107,7 @@ export class SocketClient extends EventEmitter {
 			}
 		}
 
-		this.emit("send");
+		this.emit('send');
 	}
 
 	// main message handler
@@ -125,7 +123,7 @@ export class SocketClient extends EventEmitter {
 
 	// event handlers
 	public onSocketMessage(event: MessageEvent): void {
-		const isBinary = typeof event.data === 'string';
+		const isBinary = typeof event.data !== 'string';
 		if (!isBinary) {
 			const data = JSON.parse(event.data);
 			if (data.type === 'clientid') {
@@ -176,8 +174,8 @@ export class SocketClient extends EventEmitter {
 
 	private onClientId(event: MessageEvent, json: any) {
 		this.clientId = json.message.id;
-		this.emit("clientId", this.clientId);
-		console.log("SocketClient - clientId", this.clientId);
+		this.emit('clientId', this.clientId);
+		console.log('SocketClient - clientId', this.clientId);
 	}
 
 	private onPing(event: MessageEvent, json: any): void {
