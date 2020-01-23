@@ -6,7 +6,9 @@
     "jsRules": {},
     "rules": {
         "indent": [true, "tabs", 4],
-        "quotemark": [true, "single", "avoid-escape"]
+		"quotemark": [true, "single", "avoid-escape"],
+		"no-console": false,
+		"ordered-imports": false
     },
 	"rulesDirectory": [],
 	"linterOptions": {

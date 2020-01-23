@@ -4,21 +4,21 @@ import { createSocketAddress } from "./helpers";
 import { CLOSE_GOING_AWAY, CLOSE_NORMAL } from "./CloseCodes";
 
 export const defaultOptions = {
-	host: "localhost",
-	port: 3000,
-	secure: false,
 	autoconnect: true,
+	debug: true,
+	host: 'localhost',
+	port: 3000,
 	reconnect: true,
-	debug: true
+	secure: false,
 };
 
 export class SocketClient extends EventEmitter {
-	options: IClientOptions;
-	socket: WebSocket;
-	clientId: any;
-	reconnecting: boolean;
-	beforeunloadEventSet: boolean;
-	binaryType: "blob" | "arraybuffer";
+	public options: IClientOptions;
+	public socket: WebSocket;
+	public clientId: any;
+	public reconnecting: boolean;
+	public beforeunloadEventSet: boolean;
+	public binaryType: 'blob' | 'arraybuffer';
 
 	/**
 	 * Client constructor
@@ -42,7 +42,7 @@ export class SocketClient extends EventEmitter {
 		}
 	}
 
-	get status(): number {
+	public get status(): number {
 		if (this.socket) {
 			return this.socket.readyState;
 		} else {
@@ -50,7 +50,7 @@ export class SocketClient extends EventEmitter {
 		}
 	}
 
-	connect(forceReconnect: boolean = false): void {
+	public connect(forceReconnect: boolean = false): void {
 		if (!this.socket || forceReconnect) {
 			this.socket = null;
 			this.socket = new WebSocket(createSocketAddress(this.options));
@@ -91,7 +91,7 @@ export class SocketClient extends EventEmitter {
 		}
 	}
 
-	disconnect(stopReconnecting: boolean = true): void {
+	public disconnect(stopReconnecting: boolean = true): void {
 		if (stopReconnecting) {
 			this.options.reconnect = false;
 		}
@@ -99,8 +99,8 @@ export class SocketClient extends EventEmitter {
 		this.socket.close(CLOSE_NORMAL, "client disconnecting");
 	}
 
-	send(payload: any): void {
-		let binary = payload instanceof ArrayBuffer || payload instanceof Blob;
+	public send(payload: any): void {
+		const binary = payload instanceof ArrayBuffer || payload instanceof Blob;
 		if (this.socket && this.status === WebSocket.OPEN) {
 			if (!binary) {
 				this.socket.send(JSON.stringify(payload));
@@ -113,24 +113,24 @@ export class SocketClient extends EventEmitter {
 	}
 
 	// main message handler
-	messageHandler(event: MessageEvent, json: any) {
-		this.emit("message", json);
-		this.emit("stringMessage", json);
+	public messageHandler(event: MessageEvent, json: any) {
+		this.emit('message', json);
+		this.emit('stringMessage', json);
 	}
 
-	binaryMessageHandler(event: MessageEvent) {
-		this.emit("message", event.data);
-		this.emit("binaryMessage", event.data);
+	public binaryMessageHandler(event: MessageEvent) {
+		this.emit('message', event.data);
+		this.emit('binaryMessage', event.data);
 	}
 
 	// event handlers
-	onSocketMessage(event: MessageEvent): void {
-		let isBinary = typeof event.data === "string";
+	public onSocketMessage(event: MessageEvent): void {
+		const isBinary = typeof event.data === 'string';
 		if (!isBinary) {
-			let data = JSON.parse(event.data);
-			if (data.type === "clientid") {
+			const data = JSON.parse(event.data);
+			if (data.type === 'clientid') {
 				this.onClientId(event, data);
-			} else if (data.type === "ping") {
+			} else if (data.type === 'ping') {
 				this.onPing(event, data);
 			} else {
 				this.messageHandler(event, data);
@@ -140,18 +140,23 @@ export class SocketClient extends EventEmitter {
 		}
 	}
 
-	onConnect(event: Event): void {
-		this.emit("connect", event);
+	private onConnect(event: Event): void {
+		this.emit('connect', event);
 		if (this.reconnecting) {
 			this.onReconnect();
 			this.reconnecting = false;
 		}
-		this.options.debug && console.log("SocketClient connect", event);
+		if (this.options.debug) {
+			console.log('SocketClient connect', event);
+		}
 	}
 
-	onDisconnect(event: Event): void {
-		this.emit("disconnect", event);
-		this.options.debug && console.log("SocketClient disconnect", event);
+	private onDisconnect(event: Event): void {
+		this.emit('disconnect', event);
+
+		if (this.options.debug) {
+			console.log('SocketClient disconnect', event);
+		}
 
 		this.socket = null;
 
@@ -160,24 +165,26 @@ export class SocketClient extends EventEmitter {
 		}
 	}
 
-	onReconnect(): void {
-		this.emit("reconnect");
+	private onReconnect(): void {
+		this.emit('reconnect');
 	}
 
-	onError(event: Event): void {
-		this.emit("error", event);
-		console.error("SocketClient error", event);
+	private onError(event: Event): void {
+		this.emit('error', event);
+		console.error('SocketClient error', event);
 	}
 
-	onClientId(event: MessageEvent, json: any) {
+	private onClientId(event: MessageEvent, json: any) {
 		this.clientId = json.message.id;
 		this.emit("clientId", this.clientId);
 		console.log("SocketClient - clientId", this.clientId);
 	}
 
-	onPing(event: MessageEvent, json: any): void {
-		this.emit("ping", json.message);
-		this.send({ type: "pong", message: json.message });
-		this.options.debug && console.log("SocketClient - ping");
+	private onPing(event: MessageEvent, json: any): void {
+		this.emit('ping', json.message);
+		this.send({ type: 'pong', message: json.message });
+		if (this.options.debug) {
+			console.log('SocketClient - ping');
+		}
 	}
 }
